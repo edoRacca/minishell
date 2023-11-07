@@ -4,7 +4,6 @@
 	...
 	...
 	fun:readline
-	fun:main
 }
 {
 	readline
@@ -12,9 +11,6 @@
 	...
 	...
 	fun:add_history
-	fun:show_history
-	fun:alloc_history_entry
-	fun:xmalloc
 }
 {
 	readline
