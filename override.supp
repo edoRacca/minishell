@@ -1,0 +1,26 @@
+{
+	readline
+	Memcheck:Leak
+	...
+	...
+	fun:readline
+	fun:main
+}
+{
+	readline
+	Memcheck:Leak
+	...
+	...
+	fun:add_history
+	fun:show_history
+	fun:alloc_history_entry
+	fun:xmalloc
+}
+{
+	readline
+	Memcheck:Leak
+	...
+	...
+	fun:rl_initialize
+	fun:readline
+}
