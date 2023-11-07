@@ -20,12 +20,6 @@
 	- Combinare pipe e redirections (NB: le redirections hanno priorita sui pipe)
 ** TODO - gestire comandi a cui rimangono aperti i figli (cat | cat | ls,
 	dovrebbe stampre ls e chiudersi il comando dopo due enter)
-** TODO - gestire comando non trovato che rimane aperto con piu pipe (ei:
-	ls filethatdoesntexist | grep bla | more)-> si chiude solo dopo "enter"
-** TODO - usando 2 volte comano history da errore di valgrind
-	+ stampa una volta in piu il comando nella history
-** TODO - fixare la differenza tra export "/bin/" e '/bin/'
-** TODO - sistemare << (invalid arguments) -> controllare spazi delimitatore
 */
 void	nuller(t_env *e)
 {
@@ -92,6 +86,7 @@ void	alloc_e(int c, char **argv, char **env, t_env *e)
 	searchpath(e);
 	e->space = 0;
 	e->c_path = 0;
+	e->red_flag = 0;
 }
 
 int	main(int c, char **argv, char **env)
@@ -112,7 +107,8 @@ int	main(int c, char **argv, char **env)
 		if (e->cmd == NULL)
 			exiting_d(e);
 		nuller(e);
-		if (e->cmd[0] != '\0')
+		if (e->cmd[0] != '\0' && e->red_flag == 0)
 			add_history(e->cmd);
+		e->red_flag = 0;
 	}
 }

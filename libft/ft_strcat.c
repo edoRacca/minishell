@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 11:48:11 by sgalli            #+#    #+#             */
-/*   Updated: 2023/09/07 12:10:56 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/07 17:28:25 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strcat(char *d, const char *s)
 	int	k;
 
 	k = 0;
-	i = ft_strlen(d);
+	i = ft_strrlen(d);
 	while (s[k] != '\0')
 	{
 		d[i++] = s[k++];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minor_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eraccane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 21:25:41 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/06 18:23:42 by eraccane         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:58:22 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	single_continuous(t_env *e, int fd)
 char	*update_buffer_red(char *line, char *buffer)
 {
 	char	*all;
+	char	*buf;
 
-	all = (char *)malloc(sizeof(char) * (ft_strlen(buffer) + 1));
+	all = NULL;
 	all = ft_strcpy(all, buffer);
-	buffer = (char *)malloc(sizeof(char) * (ft_strlen(line) + ft_strlen(all) + 1
-				+ 2));
-	buffer = ft_strjoin_n(all, line);
-	return (buffer);
+	buf = ft_strjoin_n(all, line);
+	free(buffer);
+	return (buf);
 }
 
 int	check_signals_red(t_env *e, char *line)
@@ -74,9 +74,13 @@ void	redirect_double_arrows(t_env *e, char *buffer)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
+	char	*s;
 
+	s = NULL;
+	s = ft_strcpy(s, buffer);
+	free(buffer);
 	if (check_error_red(pipe_fd) == 1)
 		return ;
 	pid = fork();
-	continuing_minor_double(e, buffer, pipe_fd, pid);
+	continuing_minor_double(e, s, pipe_fd, pid);
 }

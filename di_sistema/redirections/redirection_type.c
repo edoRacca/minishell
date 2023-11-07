@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eraccane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:07:09 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/06 18:23:31 by eraccane         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:44:28 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	single_minor_redirect(t_env *e)
 		e->exit = 1;
 		return ;
 	}
-	single_continuous(e, fd);
 	free(filename);
+	single_continuous(e, fd);
 	e->exit = 1;
 }
 
@@ -56,7 +56,7 @@ void	double_minor_redirect(t_env *e)
 	char	*line;
 	char	*buffer;
 
-	delim = e->v[index_v_arrows(e, "<< ") + 1];
+	delim = e->v[index_v_arrows(e, "<<") + 1];
 	line = NULL;
 	buffer = NULL;
 	while (1)
@@ -73,7 +73,7 @@ void	double_minor_redirect(t_env *e)
 		else
 			buffer = update_buffer_red(line, buffer);
 	}
-	e->redirection_flag = 1;
+	e->red_flag = 1;
 	e->exit = 1;
 }
 

@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:44:45 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/03 17:20:39 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:57:06 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ void	dir_cont(t_env *e)
 			e->exit = 1;
 			perror("pwdr");
 		}
-		return ;
-	}
-	else if (compare(e->v[e->i], "history") == 1)
-	{
-		add_history(e->v[e->i]);
-		show_history();
 		return ;
 	}
 	else

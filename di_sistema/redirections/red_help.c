@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   red_help.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eraccane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:45:48 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/06 18:23:33 by eraccane         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:27:27 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ void	fork_pid_zero(t_env *e, char *filename, int type)
 	}
 	dup2(fd, 1);
 	close(fd);
-	if (check_builtin(e) == 0)
-	{
-		flag_matrix(e);
-		execve(e->s, e->mat_flag, e->env);
-		perror("execve");
-		exiting(e, 1);
-	}
 	variabletype(e);
 	exiting(e, 0);
 }
@@ -105,10 +98,16 @@ char	*find_filepath_minor(t_env *e)
 	i = 0;
 	str = (char *)malloc(sizeof(char) * ft_strlen(e->v[index_v_arrows(e, "<")
 				+ 1]) + 1);
-	while (e->v[index_v_arrows(e, "<") + 1][i] != 0)
+	while (e->v[index_v_arrows(e, "<") + 1][i] != 0 && \
+	e->v[index_v_arrows(e, "<") + 1][i] != ' ')
 	{
 		str[i] = e->v[index_v_arrows(e, "<") + 1][i];
 		i++;
+	}
+	if (i == 0)
+	{
+		free(str);
+		str = NULL;
 	}
 	str[i] = '\0';
 	return (str);

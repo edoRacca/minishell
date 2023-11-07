@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgalli <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:08:28 by sgalli            #+#    #+#             */
-/*   Updated: 2022/10/26 11:05:31 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/07 17:29:01 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	j = 0;
 	i = 0;
-	l = ft_strlen(s1);
+	l = ft_strrlen(s1);
 	if (s1 == 0 || set == 0)
 		return (0);
 	while (s1[i] && ft_controllaset(s1[i], set) != 0)

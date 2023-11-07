@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eraccane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:15:40 by sgalli            #+#    #+#             */
-/*   Updated: 2023/10/12 16:08:26 by eraccane         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:02:59 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,16 @@ char	*ft_strjoin_n(char *s1, char *s2)
 {
 	char	*st;
 
-	if (!s1)
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
 	{
 		st = (char *)malloc(sizeof(char) * (ft_strlen(s2) + 1 + 1));
 		st = ft_strcpy(st, s2);
-		st[ft_strlen(st)] = '\n';
 		st[ft_strlen(st) + 1] = '\0';
+		st[ft_strlen(st)] = '\n';
 		return (st);
 	}
-	else if (!s2)
-	{
-		st = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
-		st = ft_strcpy(st, s1);
-		st[ft_strlen(st)] = '\n';
-		st[ft_strlen(st) + 1] = '\0';
-		return (st);
-	}
-	else if (!s1 && !s2)
-		return (NULL);
 	st = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1 + 2));
 	if (st == NULL)
 		return (NULL);

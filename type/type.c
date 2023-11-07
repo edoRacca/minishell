@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eraccane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 09:27:45 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/06 18:24:01 by eraccane         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:04:00 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ int	arrows_number(t_env *e)
 
 void	type_cont(t_env *e)
 {
-	if (arrows_number(e) == 1)
+	if (arrows_number(e) > 1)
+	{
 		multiple_redirect(e);
+		return ;
+	}
 	if (compare(e->v[e->i], "exit") == 1 && e->exit != 1)
 		exiting(e, 0);
 	else if (search_arrows(e, "< ") == 1 || search_arrows(e, "> ") == 1

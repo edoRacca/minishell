@@ -47,7 +47,6 @@ SRC = 	main.c \
 		libft/ft_strcpy.c \
 		libft/ft_strcat.c \
 		di_sistema/signal/signal.c \
-		di_sistema/history/history.c \
 		di_sistema/echo/echo.c \
 		di_sistema/echo/echo2.c \
 		di_sistema/export_unset_env/unset_env.c \
@@ -60,6 +59,7 @@ SRC = 	main.c \
 		di_sistema/redirections/redirections.c \
 		di_sistema/redirections/red_help.c \
 		di_sistema/redirections/red_help_2.c \
+		di_sistema/redirections/red_help3.c \
 		di_sistema/redirections/redirection_type.c \
 		di_sistema/redirections/minor_redirection.c \
 		split/split.c \

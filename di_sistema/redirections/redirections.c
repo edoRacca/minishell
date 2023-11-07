@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eraccane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:12:48 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/06 18:25:58 by eraccane         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:45:31 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 void	multiple_redirect(t_env *e)
 {
-    (void)e;
+	while (e->v[e->i] != NULL)
+	{
+		if (search_arrows(e, "< ") == 1 || search_arrows(e, "> ") == 1
+			|| search_arrows(e, "<") == 1 || search_arrows(e, ">") == 1)
+			redirect_mult_single(e);
+		// else if (search_arrows(e, "<< ") == 1 || search_arrows(e, ">> ") == 1
+		// 	|| search_arrows(e, "<<") == 1 || search_arrows(e, ">>") == 1)
+		// 	redirect_mult_double(e);
+		update_redir(e);
+	}
+	e->exit = 1;
 }
 
 // << >>
@@ -24,7 +34,7 @@ void	redirect_double(t_env *e)
 			|| compare(e->v[index_v_arrows(e, ">> ")], ">> ") == 1)
 		&& e->v[index_v_arrows(e, ">>") + 1] != NULL)
 		double_major_redirect(e);
-	else if (compare(e->v[index_v_arrows(e, "<< ")], "<< ") == 1
+	else if (compare(e->v[index_v_arrows(e, "<<")], "<<") == 1
 		&& e->v[index_v_arrows(e, "<<") + 1] != NULL)
 		double_minor_redirect(e);
 	else
@@ -42,8 +52,8 @@ void	redirect_single(t_env *e)
 			|| compare(e->v[index_v_arrows(e, "> ")], "> ") == 1)
 		&& e->v[index_v_arrows(e, ">") + 1] != NULL)
 		single_major_redirect(e);
-	else if ((compare(e->v[index_v_arrows(e, "<")], "<") == 1
-			|| compare(e->v[index_v_arrows(e, "< ")], "< ") == 1)
+	else if ((compare(e->v[index_v_arrows(e, "<")], "<") == 1 \
+		|| compare(e->v[index_v_arrows(e, "< ")], "< ") == 1)
 		&& e->v[index_v_arrows(e, "<") + 1] != NULL)
 		single_minor_redirect(e);
 	else

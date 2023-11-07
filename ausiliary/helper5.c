@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 11:20:16 by sgalli            #+#    #+#             */
-/*   Updated: 2023/10/30 10:39:27 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/07 18:39:02 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,16 @@ void	check_built(char *s, int i, t_env *e)
 		i++;
 	if (s[i] == '|')
 		e->space = 1;
+}
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }

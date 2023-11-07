@@ -6,17 +6,17 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:13:46 by sgalli            #+#    #+#             */
-/*   Updated: 2023/10/13 10:12:50 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/07 17:43:36 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 
-char	*ft_strcpy(char *d, const char *s);
+char	*ft_strcpy(char *d, char *s);
 char	*ft_strcat(char *d, const char *s);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
@@ -31,8 +31,9 @@ char	*ft_strrchr(const char *s, int c);
 int		ft_toupper(int c);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 int		ft_tolower(int c);
+int		ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlen(const char *s);
+size_t	ft_strrlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strchr(const char *s, int c);
