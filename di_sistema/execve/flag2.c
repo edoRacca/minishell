@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:25:01 by sgalli            #+#    #+#             */
-/*   Updated: 2023/10/26 12:10:14 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 14:54:41 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,27 @@ void	flag_env(t_env *e)
 	e->mat_flag[e->word][k] = '\0';
 	e->flag_i = 0;
 	e->i_env = 0;
+}
+
+void	flag_while(t_env *e)
+{
+	while (e->v[e->indx] != NULL && e->numb < e->count
+		&& e->v[e->indx][0] != '|')
+	{
+		if (e->v[e->indx][0] == '$' && e->v[e->indx][1] != '?')
+			flag_env(e);
+		else
+			split_flag(e);
+		e->word++;
+		e->indx++;
+		e->numb++;
+		if (e->red == 1)
+		{
+			if (e->v[e->indx] != NULL)
+			{
+				if (e->v[e->indx][0] == '>' || e->v[e->indx][0] == '<')
+					e->indx++;
+			}
+		}
+	}
 }

@@ -6,65 +6,33 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:20:33 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/07 19:02:46 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 18:27:18 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	single_major_mult_redirect(t_env *e)
-{
-	char	*filename;
-	int		fd;
-
-	filename = find_mult_filepath(e);
-	if (compare(e->v[e->i], ">") == 1 || compare(e->v[e->i], "> ") == 1)
-	{
-		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-		if (fd < 0)
-		{
-			perror("open");
-			exiting(e, 0);
-		}
-		close(fd);
-	}
-	else
-		check_red_fork(e, filename, 1);
-}
-
-void	redirect_mult_single(t_env *e)
-{
-	if ((compare(e->v[index_v_arrows(e, ">")], ">") == 1
-			|| compare(e->v[index_v_arrows(e, "> ")], "> ") == 1)
-		&& e->v[index_v_arrows(e, ">") + 1] != NULL)
-		single_major_mult_redirect(e);
-	else if ((compare(e->v[index_v_arrows(e, "<")], "<") == 1 \
-		|| compare(e->v[index_v_arrows(e, "< ")], "< ") == 1)
-		&& e->v[index_v_arrows(e, "<") + 1] != NULL)
-		single_minor_mult_redirect(e);
-	else
-	{
-		e->exit = 1;
-		errno = EINVAL;
-		perror("minishell: warning");
-	}
-}
-
 void	update_redir(t_env *e)
 {
-	if ((compare(e->v[e->i], ">>") == 1 || compare(e->v[e->i], ">") == 1 || \
-		compare(e->v[e->i], "<<") == 1 || compare(e->v[e->i], "<") == 1 || \
-		compare(e->v[e->i], ">> ") == 1 || compare(e->v[e->i], "> ") == 1 || \
-			compare(e->v[e->i], "<< ") == 1 || compare(e->v[e->i], "< ") == 1)
-		&& (e->v[e->i] != NULL))
+	update_in_out(e);
+	if (e->v[e->i][0] == '<' && e->v[e->i][0] == '>' \
+	&& (e->v[e->i] != NULL))
 		e->i++;
+	else
+	{
+		while (e->v[e->i] != NULL)
+		{
+			if (e->v[e->i][0] == '<' || e->v[e->i][0] == '>')
+			{
+				e->i++;
+				break ;
+			}
+			e->i++;
+		}
+	}
 	while (e->v[e->i] != NULL)
 	{
-		printf("%s\n", e->v[e->i]);
-		if (compare(e->v[e->i], ">>") == 1 || compare(e->v[e->i], ">") == 1 || \
-			compare(e->v[e->i], "<<") == 1 || compare(e->v[e->i], "<") == 1 || \
-		compare(e->v[e->i], ">> ") == 1 || compare(e->v[e->i], "> ") == 1 || \
-			compare(e->v[e->i], "<< ") == 1 || compare(e->v[e->i], "< ") == 1)
+		if (e->v[e->i][0] == '<' || e->v[e->i][0] == '>')
 			break ;
 		e->i++;
 	}
@@ -80,8 +48,7 @@ char	*find_filepath(t_env *e)
 	return (e->v[i]);
 }
 
-void	continuing_minor_double(t_env *e, char *s, int pipe_fd[2],
-	pid_t pid)
+void	continuing_minor_double(t_env *e, char *s, int pipe_fd[2], pid_t pid)
 {
 	if (pid == -1)
 	{
@@ -104,4 +71,35 @@ void	continuing_minor_double(t_env *e, char *s, int pipe_fd[2],
 		waitpid(pid, NULL, 0);
 	}
 	free(s);
+}
+
+void	fork_cotinue(t_env *e, pid_t pid, int fd)
+{
+	if (pid == 0)
+	{
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		variabletype(e);
+		exiting(e, 0);
+	}
+	else
+		waitpid(pid, NULL, 0);
+}
+
+void	execve_red(t_env *e, int fd)
+{
+	close(0);
+	dup2(fd, 1);
+	close(fd);
+	if (e->s != NULL)
+	{
+		if (e->c_path == 0 && access(e->s, X_OK) == 0 && check_builtin(e) == 0)
+		{
+			execve(e->s, e->mat_flag, e->env);
+			perror("execve");
+			exiting(e, 1);
+		}
+	}
+	variabletype(e);
+	exiting(e, 0);
 }

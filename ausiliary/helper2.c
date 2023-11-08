@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:55:37 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/02 13:42:08 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 19:08:51 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	free_table(char **s)
 	i = 0;
 	if (s == NULL || s[0] == NULL)
 		return ;
-	while (s[i] != NULL)
-		free(s[i++]);
-	free(s);
+	else
+	{
+		while (s[i] != NULL)
+			free(s[i++]);
+		free(s);
+	}
 }
 
 void	exiting(t_env *e, int i)

@@ -62,6 +62,8 @@ SRC = 	main.c \
 		di_sistema/redirections/red_help3.c \
 		di_sistema/redirections/redirection_type.c \
 		di_sistema/redirections/minor_redirection.c \
+		di_sistema/redirections/mult_redirect.c \
+		di_sistema/redirections/check_red.c \
 		split/split.c \
 		split/split2.c \
 		pipe/pipe.c \

@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 21:25:41 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/07 18:58:22 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 14:48:41 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	single_continuous(t_env *e, int fd)
 {
 	pid_t	pid;
 
+	if (check_builtin(e) == 0)
+	{
+		pathcmd(e);
+		flag_matrix(e);
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -23,15 +28,7 @@ void	single_continuous(t_env *e, int fd)
 		e->exit = 1;
 		exiting(e, 1);
 	}
-	else if (pid == 0)
-	{
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		variabletype(e);
-		exiting(e, 0);
-	}
-	else
-		waitpid(pid, NULL, 0);
+	fork_cotinue(e, pid, fd);
 }
 
 char	*update_buffer_red(char *line, char *buffer)

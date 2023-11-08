@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 09:27:45 by marvin            #+#    #+#             */
-/*   Updated: 2023/11/07 19:04:00 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 14:52:24 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,25 @@ void	type_cont(t_env *e)
 {
 	if (arrows_number(e) > 1)
 	{
+		e->red = 1;
 		multiple_redirect(e);
+		e->red = 0;
 		return ;
 	}
 	if (compare(e->v[e->i], "exit") == 1 && e->exit != 1)
 		exiting(e, 0);
 	else if (search_arrows(e, "< ") == 1 || search_arrows(e, "> ") == 1
 		|| search_arrows(e, "<") == 1 || search_arrows(e, ">") == 1)
+	{
 		redirect_single(e);
+		e->red = 0;
+	}
 	else if (search_arrows(e, "<< ") == 1 || search_arrows(e, ">> ") == 1
 		|| search_arrows(e, "<<") == 1 || search_arrows(e, ">>") == 1)
+	{
 		redirect_double(e);
+		e->red = 0;
+	}
 	else if (e->v != NULL && e->exit != 1)
 		variabletype(e);
 }

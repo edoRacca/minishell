@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:35:11 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/07 19:02:15 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 12:35:16 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,51 @@ char	*find_mult_filepath(t_env *e)
 	return (e->v[i]);
 }
 
+char	*find_mult_mult_filepath(t_env *e)
+{
+	int		i;
+
+	i = e->i;
+	while (e->v[i] != NULL)
+	{
+		if (compare(e->v[i], ">>") == 1)
+		{
+			i++;
+			break ;
+		}
+		i++;
+	}
+	return (e->v[i]);
+}
+
+char	*alloc_file(t_env *e, char *s)
+{
+	int	i;
+
+	i = e->i;
+	while (e->v[i] != NULL)
+	{
+		if (compare(e->v[i], s) == 1)
+		{
+			i++;
+			return (e->v[i]);
+		}
+		i++;
+	}
+	return (0);
+}
+
 char	*find_filepath_minor_mult(t_env *e)
 {
 	int		i;
 	char	*str;
 	int		j;
+	int		d;
 
 	i = e->i;
 	j = 0;
-	str = (char *)malloc(sizeof(char) * ft_strlen(e->v[index_v_arrows(e, "<")
-				+ 1]) + 1);
+	d = ft_strlen(alloc_file(e, "<")) + 1;
+	str = (char *)malloc(sizeof(char) * d);
 	while (e->v[i] != NULL)
 	{
 		if (compare(e->v[i], "<") == 1)
@@ -48,30 +83,26 @@ char	*find_filepath_minor_mult(t_env *e)
 		}
 		i++;
 	}
+	d = 0;
 	while (e->v[i][j] != 0 && \
 	e->v[i][j + 1] != ' ')
-	{
-		str[j] = e->v[i][j];
-		j++;
-	}
-	str[i] = '\0';
+		str[d++] = e->v[i][j++];
+	str[d] = '\0';
 	return (str);
 }
 
-void	single_minor_mult_redirect(t_env *e)
+int	search_mult_arrows(t_env *e, char *s)
 {
-	int		fd;
-	char	*filename;
+	int	i;
 
-	filename = find_filepath_minor_mult(e);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
+	i = e->i;
+	while (e->v[i] != NULL)
 	{
-		perror("open");
-		e->exit = 1;
-		return ;
+		if (compare(e->v[i], s) == 1)
+			return (1);
+		if (e->v[e->i][0] == '>' || e->v[e->i][0] == '<')
+			return (0);
+		i++;
 	}
-	free(filename);
-	single_continuous(e, fd);
-	e->exit = 1;
+	return (0);
 }

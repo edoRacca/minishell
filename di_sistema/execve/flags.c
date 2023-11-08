@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:06:10 by sgalli            #+#    #+#             */
-/*   Updated: 2023/10/26 13:23:14 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 14:38:03 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,14 @@ void	check_flags(t_env *e)
 	{
 		if (e->v[e->indx][0] == '|' || e->v[e->indx][0] == '<'
 			|| e->v[e->indx][0] == '>')
+		{
+			if (e->red == 1)
+			{
+				if (e->v[e->indx + 1] != NULL)
+					e->count++;
+			}
 			break ;
+		}
 		else if (strcom(e->v[e->indx], e->exit_code) == 0)
 			e->indx++;
 		else
@@ -101,16 +108,6 @@ void	flag_matrix(t_env *e)
 	e->numb = 0;
 	e->iter = 0;
 	e->word = 0;
-	while (e->v[e->indx] != NULL && e->numb < e->count
-		&& e->v[e->indx][0] != '|')
-	{
-		if (e->v[e->indx][0] == '$' && e->v[e->indx][1] != '?')
-			flag_env(e);
-		else
-			split_flag(e);
-		e->word++;
-		e->indx++;
-		e->numb++;
-	}
+	flag_while(e);
 	e->mat_flag[e->word] = NULL;
 }

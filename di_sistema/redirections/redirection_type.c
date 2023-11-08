@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:07:09 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/07 18:44:28 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/08 13:53:41 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	single_minor_redirect(t_env *e)
 
 	filename = find_filepath_minor(e);
 	fd = open(filename, O_RDONLY);
+	free(filename);
 	if (fd < 0)
 	{
 		perror("open");
 		e->exit = 1;
 		return ;
 	}
-	free(filename);
 	single_continuous(e, fd);
 	e->exit = 1;
 }
