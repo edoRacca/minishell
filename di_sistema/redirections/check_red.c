@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:57:03 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/08 19:08:25 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 17:03:09 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,25 @@
 
 void	read_and_write(int fdin, int fdout, t_env *e)
 {
-	char	*buf;
-	size_t	i;
-	int		r;
-
-	r = 1;
-	buf = ft_calloc(1024, sizeof(char));
-	while (r > 0)
+	e->i = 0;
+	e->s = NULL;
+	if (check_builtin(e) == 0)
 	{
-		r = read(fdin, buf, 1024);
-		if (r <= 0)
-		{
-			perror("read");
-			break ;
-		}
-		i = ft_strrlen(buf);
-		write(fdout, buf, i);
+		e->redir = 1;
+		pathcmd(e);
+		flag_matrix(e);
 	}
-	close(fdin);
+	if (e->s == NULL)
+	{
+		variabletype(e);
+		close(fdin);
+		close(fdout);
+		exiting(e, 1);
+	}
 	close(fdout);
-	free(buf);
+	close(fdin);
+	execve(e->s, e->mat_flag, e->env);
+	perror("execve");
 	exiting(e, 1);
 }
 
@@ -53,12 +52,12 @@ void	forking_red(t_env *e, char *fileoutput, int type, char *fileinput)
 	free(fileoutput);
 	if (fdout < 0 || fdin < 0)
 	{
+		e->exit_code = 1;
 		perror("open");
-		e->exit = 1;
 		return ;
 	}
-	dup2(fdin, 0);
 	dup2(fdout, 1);
+	dup2(fdin, 0);
 	read_and_write(fdin, fdout, e);
 }
 
@@ -86,18 +85,19 @@ void	last_file(t_env *e)
 
 	e->i = e->in_red;
 	fileinput = find_filepath_minor_mult(e);
-	if (compare(e->v[e->in_red], ">>") == 1)
+	e->i = e->out_red;
+	if (compare(e->v[e->out_red], ">>") == 1)
 	{
-		e->i = e->out_red;
-		fileoutput = find_mult_mult_filepath(e);
+		fileoutput = find_lasth_filepath(e);
 		writing(e, fileoutput, 2, fileinput);
 	}
 	else
 	{
-		e->i = e->out_red;
-		fileoutput = find_mult_filepath(e);
+		fileoutput = find_lasth_filepath(e);
 		writing(e, fileoutput, 1, fileinput);
 	}
+	free(fileinput);
+	free(fileoutput);
 }
 
 void	update_in_out(t_env *e)
@@ -107,12 +107,12 @@ void	update_in_out(t_env *e)
 	i = e->i;
 	while (e->v[i] != NULL)
 	{
-		if (compare(e->v[i], "<") == 1)
+		if (e->v[i][0] == '<')
 		{
 			e->in_red = i;
 			break ;
 		}
-		else if (compare(e->v[i], ">") == 1)
+		else if (e->v[i][0] == '>')
 		{
 			e->out_red = i;
 			break ;

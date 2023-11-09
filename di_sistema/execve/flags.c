@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:06:10 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/08 14:38:03 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 12:45:29 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,7 @@ void	check_flags(t_env *e)
 	{
 		if (e->v[e->indx][0] == '|' || e->v[e->indx][0] == '<'
 			|| e->v[e->indx][0] == '>')
-		{
-			if (e->red == 1)
-			{
-				if (e->v[e->indx + 1] != NULL)
-					e->count++;
-			}
 			break ;
-		}
 		else if (strcom(e->v[e->indx], e->exit_code) == 0)
 			e->indx++;
 		else
@@ -98,7 +91,7 @@ void	flag_matrix(t_env *e)
 	if (e->mat_flag != NULL)
 		free_table(e->mat_flag);
 	check_flags(e);
-	if (e->count == 1)
+	if (e->count == 1 && e->count != 1)
 	{
 		e->mat_flag = NULL;
 		return ;

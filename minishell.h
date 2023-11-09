@@ -168,6 +168,7 @@ typedef struct s_env
 	int		i_env;
 	int		flag_i;
 	int		lenght;
+	int		redir;
 	int		ex;
 	int		exit_code;
 	int		exit;
@@ -286,8 +287,10 @@ void	cont_splitme(t_env *e);
 void	redirect_mult_single(t_env *e);
 void	check_built(char *s, int i, t_env *e);
 void	multiple_redirect(t_env *e);
+void	waiting2(t_env *e, pid_t pid);
 void	continuing_minor_double(t_env *e, char *buffer, int pipe_fd[2], \
 pid_t pid);
+void	min_mult_redirect(t_env *e);
 
 char	*find_mult_mult_filepath(t_env *e);
 char	*find_mult_filepath(t_env *e);
@@ -296,6 +299,7 @@ char	*ft_strjoin_n(char *s1, char *s2);
 char	*mini_strcat(char *d, const char *s);
 char	*update_buffer_red(char *line, char *buffer);
 char	*find_filepath_minor_mult(t_env *e);
+char	*find_lasth_filepath(t_env *e);
 char	*find_filepath(t_env *e);
 char	*find_filepath_minor(t_env *e);
 char	**new_tmp(t_env *e, char **tmp);

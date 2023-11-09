@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:12:48 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/08 14:51:09 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 12:09:59 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	redirect_double(t_env *e)
 {
-	e->red = 1;
 	if ((compare(e->v[index_v_arrows(e, ">>")], ">>") == 1
 			|| compare(e->v[index_v_arrows(e, ">> ")], ">> ") == 1)
 		&& e->v[index_v_arrows(e, ">>") + 1] != NULL)
@@ -30,10 +29,8 @@ void	redirect_double(t_env *e)
 	}
 }
 
-// < >
 void	redirect_single(t_env *e)
 {
-	e->red = 1;
 	if ((compare(e->v[index_v_arrows(e, ">")], ">") == 1
 			|| compare(e->v[index_v_arrows(e, "> ")], "> ") == 1)
 		&& e->v[index_v_arrows(e, ">") + 1] != NULL)

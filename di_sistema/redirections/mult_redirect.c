@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:11:31 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/08 16:52:01 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 17:16:48 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	multiple_redirect(t_env *e)
 	e->out_red = 0;
 	while (e->v[e->i] != NULL)
 	{
+		while (e->v[e->i][0] != '<' && e->v[e->i][0] != '>')
+			e->i++;
 		if ((e->v[e->i][1] != '>') && (search_mult_arrows(e, "< ") == 1 \
 	|| search_mult_arrows(e, "> ") == 1 || search_mult_arrows(e, "<") == 1 \
 	|| search_mult_arrows(e, ">") == 1))
@@ -49,6 +51,7 @@ void	single_major_mult_redirect(t_env *e)
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (fd < 0)
 		{
+			e->exit_code = 1;
 			perror("open");
 			exiting(e, 0);
 		}
@@ -64,7 +67,7 @@ void	redirect_mult_single(t_env *e)
 		single_major_mult_redirect(e);
 	else if (search_mult_arrows(e, "< ") == 1 \
 	|| search_mult_arrows(e, "<") == 1)
-		single_minor_mult_redirect(e);
+		min_mult_redirect(e);
 	else
 	{
 		e->exit = 1;
@@ -84,6 +87,7 @@ void	redirect_mult_double(t_env *e)
 		fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0666);
 		if (fd < 0)
 		{
+			e->exit_code = 1;
 			perror("open");
 			exiting(e, 0);
 		}
@@ -93,26 +97,19 @@ void	redirect_mult_double(t_env *e)
 		check_red_fork(e, filename, 2);
 }
 
-void	single_minor_mult_redirect(t_env *e)
+char	*find_lasth_filepath(t_env *e)
 {
-	int		fd;
-	char	*filename;
+	int		i;
 
-	if (e->v[e->i][0] == '<' && e->v[e->i + 1] == NULL)
+	i = e->i;
+	while (e->v[i] != NULL)
 	{
-		printf("error nothing after <\n");
-		return ;
+		if (e->v[i][0] == '>')
+		{
+			i++;
+			break ;
+		}
+		i++;
 	}
-	filename = find_filepath_minor_mult(e);
-	fd = open(filename, O_RDONLY);
-	free(filename);
-	if (fd < 0)
-	{
-		perror("open");
-		e->exit = 1;
-		return ;
-	}
-	if (e->v[0][0] != '<')
-		single_continuous(e, fd);
-	e->exit = 1;
+	return (e->v[i]);
 }

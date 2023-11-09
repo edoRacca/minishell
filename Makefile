@@ -60,6 +60,7 @@ SRC = 	main.c \
 		di_sistema/redirections/red_help.c \
 		di_sistema/redirections/red_help_2.c \
 		di_sistema/redirections/red_help3.c \
+		di_sistema/redirections/red_help4.c \
 		di_sistema/redirections/redirection_type.c \
 		di_sistema/redirections/minor_redirection.c \
 		di_sistema/redirections/mult_redirect.c \

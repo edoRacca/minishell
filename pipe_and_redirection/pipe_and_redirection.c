@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 16:33:21 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/08 14:53:14 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 17:17:10 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,19 @@ int	is_pipe(t_env *e)
 	return (0);
 }
 
+void	red_pipe(t_env *e)
+{
+}
+
 void	pipe_and_redirection(t_env *e)
 {
 	int	p;
 
 	p = is_pipe(e);
-	e->red = 1;
 	if (p == 1)
-	{
-		printf("pipe");
-	}
+		pipe_red(e);
 	else if (p == 2)
-	{
-		printf(">>");
-	}
+		red_pipe(e);
 	else
 		return ;
-	e->red = 0;
 }

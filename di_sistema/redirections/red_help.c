@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:45:48 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/08 15:08:07 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 17:06:36 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	fork_pid_zero(t_env *e, char *filename, int type)
 	e->i = 0;
 	if (fd < 0)
 	{
+		e->exit_code = 1;
 		perror("open");
 		exiting(e, 0);
 	}
@@ -43,6 +44,8 @@ void	check_red_fork(t_env *e, char *filename, int type)
 		pathcmd(e);
 		flag_matrix(e);
 	}
+	if (access(e->s, X_OK) == -1)
+		e->exit_code = 1;
 	pid = fork();
 	if (pid < 0)
 	{
@@ -53,7 +56,7 @@ void	check_red_fork(t_env *e, char *filename, int type)
 	else if (pid == 0)
 		fork_pid_zero(e, filename, type);
 	else
-		waitpid(pid, NULL, 0);
+		waiting2(e, pid);
 	e->exit = 1;
 }
 

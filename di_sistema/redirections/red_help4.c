@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   red_help4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/18 11:12:38 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/09 16:19:07 by sgalli           ###   ########.fr       */
+/*   Created: 2023/11/09 16:23:17 by sgalli            #+#    #+#             */
+/*   Updated: 2023/11/09 17:06:41 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	g_code;
-
-void	handle_signal(int sig)
+void	min_mult_redirect(t_env *e)
 {
-	if (sig == SIGINT)
-	{
-		g_code = 130;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_clear_history();
-	}
-}
+	int		fd;
+	char	*filename;
 
-void	singals(t_env *e)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, &handle_signal);
-	if (g_code == 130)
+	e->in_red = e->i;
+	filename = find_filepath_minor_mult(e);
+	fd = open(filename, O_RDONLY);
+	free(filename);
+	if (fd < 0)
 	{
-		e->exit_code = g_code;
-		g_code = 0;
+		e->exit_code = 1;
+		perror("open");
+		e->exit = 1;
+		return ;
 	}
 }

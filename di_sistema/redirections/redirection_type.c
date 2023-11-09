@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:07:09 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/08 13:53:41 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 17:06:59 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	single_minor_redirect(t_env *e)
 	free(filename);
 	if (fd < 0)
 	{
+		e->exit_code = 1;
 		perror("open");
 		e->exit = 1;
 		return ;
@@ -41,6 +42,7 @@ void	single_major_redirect(t_env *e)
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (fd < 0)
 		{
+			e->exit_code = 1;
 			perror("open");
 			exiting(e, 0);
 		}
@@ -88,6 +90,7 @@ void	double_major_redirect(t_env *e)
 		fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0666);
 		if (fd < 0)
 		{
+			e->exit_code = 1;
 			perror("open");
 			exiting(e, 0);
 		}

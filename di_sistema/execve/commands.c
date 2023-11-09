@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 12:33:46 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/08 12:49:27 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 17:08:08 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,24 @@
 se e uscito normalmente non accade nulla altrimenti
 agggirno l'exit status
 */
+
+void	waiting2(t_env *e, pid_t pid)
+{
+	e->child = waitpid(pid, &e->status, 0);
+	if (e->child == -1)
+	{
+		perror("waitpid");
+		exiting(e, 1);
+	}
+	else
+	{
+		e->exit = 1;
+		if (WIFEXITED(e->status) == 0)
+			e->exit_code = 2;
+		else
+			e->exit_code = WEXITSTATUS(e->status);
+	}
+}
 
 void	waiting(t_env *e)
 {
@@ -29,9 +47,9 @@ void	waiting(t_env *e)
 	{
 		e->exit = 1;
 		if (WIFEXITED(e->status) == 0)
-			e->exit_code = WEXITSTATUS(e->status);
-		else
 			e->exit_code = 2;
+		else
+			e->exit_code = WEXITSTATUS(e->status);
 	}
 }
 
