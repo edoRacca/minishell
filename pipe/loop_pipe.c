@@ -6,14 +6,11 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:34:00 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/03 14:12:27 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/09 18:19:30 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//ls -l / | grep home | wc -l
-//ls / | echo 42 | wc -l
 
 void	cont_mult_pipe(t_env *e)
 {
