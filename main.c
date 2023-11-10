@@ -74,11 +74,11 @@ void	alloc_e(int c, char **argv, char **env, t_env *e)
 	(void)c;
 	(void)argv;
 	e->i = 0;
+	e->init_red = 0;
 	e->r = 0;
 	e->status = 0;
 	e->ex = 0;
 	e->equal = 0;
-	e->redir = 0;
 	e->stdin = dup(STDIN_FILENO);
 	e->stdout = dup(STDOUT_FILENO);
 	e->mat_flag = NULL;

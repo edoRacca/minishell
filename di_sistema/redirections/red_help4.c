@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:23:17 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/09 17:06:41 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/10 13:04:38 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	min_mult_redirect(t_env *e)
 	if (fd < 0)
 	{
 		e->exit_code = 1;
-		perror("open");
 		e->exit = 1;
+		perror("open");
 		return ;
 	}
+	close(fd);
 }

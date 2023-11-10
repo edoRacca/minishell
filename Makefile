@@ -74,6 +74,8 @@ SRC = 	main.c \
 		path/path.c \
 		path/contiue_path.c \
 		pipe_and_redirection/pipe_and_redirection.c \
+		pipe_and_redirection/pipe_and_redirection2.c \
+		pipe_and_redirection/pipe_and_redirection3.c \
 
 OBJ = $(SRC:.c=.o)
 

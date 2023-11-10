@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:06:10 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/09 12:45:29 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/10 11:04:03 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,6 @@ void	flag_matrix(t_env *e)
 	if (e->mat_flag != NULL)
 		free_table(e->mat_flag);
 	check_flags(e);
-	if (e->count == 1 && e->count != 1)
-	{
-		e->mat_flag = NULL;
-		return ;
-	}
 	e->mat_flag = (char **)malloc(sizeof(char *) * (e->count + 1));
 	e->indx = e->i;
 	e->numb = 0;

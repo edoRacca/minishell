@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:35:11 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/08 12:35:16 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/10 11:45:47 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ char	*find_mult_mult_filepath(t_env *e)
 	return (e->v[i]);
 }
 
-char	*alloc_file(t_env *e, char *s)
+char	*alloc_file(t_env *e, char s)
 {
 	int	i;
 
 	i = e->i;
 	while (e->v[i] != NULL)
 	{
-		if (compare(e->v[i], s) == 1)
+		if (e->v[e->i][0] == s)
 		{
 			i++;
 			return (e->v[i]);
@@ -72,11 +72,11 @@ char	*find_filepath_minor_mult(t_env *e)
 
 	i = e->i;
 	j = 0;
-	d = ft_strlen(alloc_file(e, "<")) + 1;
+	d = ft_strlen_red(alloc_file(e, '<')) + 1;
 	str = (char *)malloc(sizeof(char) * d);
 	while (e->v[i] != NULL)
 	{
-		if (compare(e->v[i], "<") == 1)
+		if (e->v[e->i][0] == '<')
 		{
 			i++;
 			break ;

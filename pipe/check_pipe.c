@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:30:26 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/09 18:14:03 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/10 17:04:28 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,13 @@ void	update_pipe(t_env *e)
 {
 	if (e->v[e->i] != NULL)
 	{
-		while (e->v[e->i] != NULL && e->v[e->i][0] != '|')
+		while (e->v[e->i] != NULL && e->v[e->i][0] != '|' \
+		&& e->v[e->i][0] != '<' && e->v[e->i][0] != '>')
 			e->i++;
+		if (e->v[e->i] == NULL)
+			return ;
+		if (e->v[e->i][0] == '<' || e->v[e->i][0] == '>')
+			return ;
 		if (e->v[e->i] != NULL)
 			e->i++;
 	}

@@ -6,12 +6,11 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:11:31 by sgalli            #+#    #+#             */
-/*   Updated: 2023/11/09 17:16:48 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/10 12:11:36 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-//cat < file1 > file2 > file3
 
 void	multiple_redirect(t_env *e)
 {
@@ -100,8 +99,14 @@ void	redirect_mult_double(t_env *e)
 char	*find_lasth_filepath(t_env *e)
 {
 	int		i;
+	char	*str;
+	int		j;
+	int		d;
 
 	i = e->i;
+	j = 0;
+	d = ft_strlen_red(alloc_file(e, '>')) + 1;
+	str = (char *)malloc(sizeof(char) * d);
 	while (e->v[i] != NULL)
 	{
 		if (e->v[i][0] == '>')
@@ -111,5 +116,10 @@ char	*find_lasth_filepath(t_env *e)
 		}
 		i++;
 	}
-	return (e->v[i]);
+	d = 0;
+	while (e->v[i][j] != 0 && \
+	e->v[i][j + 1] != ' ')
+		str[d++] = e->v[i][j++];
+	str[d] = '\0';
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: sgalli <sgalli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:07:09 by eraccane          #+#    #+#             */
-/*   Updated: 2023/11/09 17:06:59 by sgalli           ###   ########.fr       */
+/*   Updated: 2023/11/10 13:04:49 by sgalli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	single_minor_redirect(t_env *e)
 	}
 	single_continuous(e, fd);
 	e->exit = 1;
+	close(fd);
 }
 
 void	single_major_redirect(t_env *e)
